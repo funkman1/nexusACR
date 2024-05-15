@@ -10,21 +10,21 @@ This project aims to produce the necessary components needed to create a Docker 
 - Create an Azure virtual machine to act as our Nexus server.
 - Nexus service configuration on our newly created virtual machine.
 - Create an Azure Container Registry.
-- Connect our ACR with our Nexus reposiroty using proper authentication methods.
+- Connect our ACR with our Nexus repository using proper authentication methods.
 
 
 ## Creating an Azure VM to host Nexus 
 
-In order to use Nexus, we need somewhere to host it. I chose to host the service on an azure VM just to start with a clean slate, but you can host the service locally on your machine if need be.
+To use Nexus, we need somewhere to host it. I chose to host the service on an Azure VM just to start with a clean slate, but you can host the service locally on your machine if need be.
 
 ### To configure an Azure VM do the following:
 
-1. Sign into the Azure portal and search for virtual machines.
+1. Sign in to the Azure portal and search for virtual machines.
 2. Click Create in the top left corner
 3. On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with. You can also create a new resource group on this page.
 4. Assign a unique name to your virtual machine
 5. Select the appropriate Region/AZ that best aligns with your location.
-6.	Select the image of your VM, I chose ubuntu server 22.04 
+6.	Select the image of your VM, I chose Ubuntu server 22.04 
 
     a.	If you want to select a different image, select see all images and browse for your desired image
 7.	Select a size for the VM, refer to the Nexus repo recommendations profile below
@@ -40,50 +40,50 @@ In order to use Nexus, we need somewhere to host it. I chose to host the service
     b.	Password
 
 9.	Under inbound port rules, allow default selected ports of SSH(22)
-10. Move on to the disks page, leave the disks size as image default and for disks type i chose standard SSD.
-11. Onto the networking page, you must chose a virtual network and subnet, i used the deafult inputs here as i created a resource group.
-12. Enable delete public IP and NIC when VM is deleted for nicer clean up.
-13. For the mangement, monitoring, and advanced sections, feel free to review some of the configuration here but i left everything as default.
-14. Review the VM configuartion on the review + create screen and if everything looks correct, hit create.
+10. Move on to the disks page, leave the disk size as image default, and for disk type, I chose standard SSD.
+11. Onto the networking page, you must choose a virtual network and subnet, I used the default inputs here as I created a resource group.
+12. Enable delete public IP and NIC when VM is deleted for nicer cleanup.
+13. For the management, monitoring, and advanced sections, feel free to review some of the configuration here but I left everything as default.
+14. Review the VM configuration on the review + create screen and if everything looks correct, hit create.
 
 
 
 ## Nexus Setup
 
-1.	To run on nexus on our newly created Linux VM, these are the outlined steps
+1.	To run  Nexus on our newly created Linux VM, these are the outlined steps
 
     a.	Install jdk, wget, and other necessary tools
 
-    b.	Download nexus tar file & untar the file
+    b.	Download the Nexus tar file & untar the file
 
-    c.	Set up nexus user
+    c.	Set up Nexus user
 
-    d.	Start nexus and access from your web browser
-2. After we SSH into our VM, the first step is make sure our machine packages are up to date.
+    d.	Start Nexus and access from your web browser
+2. After we SSH into our VM, the first step is to make sure our machine packages are up to date.
 
     a.	Run the command **sudo apt update -y** to retrieve packages that need to be updated
 
-    b.	Run the command **sudo apt upgrade -y** to download to the updates previously retrieved
+    b.	Run the command **sudo apt upgrade -y** to download the updates previously retrieved
 
-Note: You might have to use yum instead of apt as package manager depends on OS type
+Note: You might have to use yum instead of apt as the package manager depends on the OS type
 
-3.	Next we should install wget so that we can download the tar file from the download site
+3.	Next, we should install wget so that we can download the tar file from the download site
 
     a.	Run the command **sudo apt install wget -y**
 
 4.	Download and verify Java installation
 
-    a.	Start by running the **command java** version to display the current version on java installed on the machine.
+    a.	Start by running the command **java version** to display the current version of java installed on the machine.
 
-    b.	If java has not been installed yet, there will be list of commands provided that will offer ways to download java, i chose to use the command **sudo apt install default-jre.**
+    b.	If java has not been installed yet, there will be a list of commands provided that will offer ways to download java, I chose to use the command **sudo apt install default-jre.**
 
     c. Verify the java installation by running the command **java -version**
-5.	Now lets create directory where we can download the tar file 
+5.	Now lets create a directory where we can download the tar file 
 
     a.	Run the command **sudo mkdir /app**, and then **cd app**, and **pwd** to verify you are in the /app directory.
 6.	Retrieve the tar download file
 
-    a.	Go the following link https://help.sonatype.com/en/download.html and copy the download url for the OS and java version you are using.
+    a.	Go the to following link https://help.sonatype.com/en/download.html and copy the download URL for the OS and java version you are using.
 
     b.	Run the command **sudo wget *CopiedURL***,  to download the tar file
 
@@ -124,37 +124,37 @@ Note: You might have to use yum instead of apt as package manager depends on OS 
     b.	Verify nexus is running by using the command **./nexus/bin/nexus status**
 11.	Add port **8081** and **8082** to reach the nexus UI from the browser
 
-    a.	In the azure portal, go to networking, and click create port rule, then inbound port rule
+    a.	In the Azure portal, go to networking, and click create port rule, then inbound port rule
 
-    b.	Set destination port as 8081 and protocol tcp, add a description and then hit create. Do the same for port 8082, we will need to use it later.
-12.	Access the nexus UI
+    b.	Set destination port as 8081 and protocol TCP, add a description, then hit create. Do the same for port 8082, we will need to use it later.
+12.	Access the Nexus UI
 
     a.	You should now be able to see the Nexus UI by going to the IP associated with your machine and appending :8081, so *IP*:8081
 
-13.	Sign into the admin user
+13.	Sign in to the admin user
 
     a.	Click sign-in located in the top right of the UI and you will see the instructions to retrieve the admin user password
 
     i.	Use the command **cat /app/sonatype-work/nexus3/admin.password**
 
-    ii.	Copy the password displayed and login using that and admin as the user
+    ii.	Copy the password displayed and log in using that and admin as the user
 
     iii.	You will then be prompted to configure a new password
 
     iv.	Disable anonymous access
-14.	Make sure to check the status checks provided in UI to see if your host is sufficient to run nexus
+14.	Make sure to check the status checks provided in UI to see if your host is sufficient to run Nexus
     
-    a.	Under support tab, then status, view to see if there are any warnings.
+    a.	Under the support tab, then status, view to see if there are any warnings.
 ## Create an Azure Container Registry
-1.  This process is pretty straight forward and can be done from the Azure portal.
+1.  This process is pretty straightforward and can be done from the Azure portal.
 
-2. Login to the Azure portal and search for container registries.
-3. Fill out the required fields with the appropiate subscription and resource group, followed bya unique name for the registry.
-4. Select the pricing plan according to necessary capabilites, i chose basic.
-5. Finally hit review + create to finish.
+2. Log in to the Azure portal and search for container registries.
+3. Fill out the required fields with the appropriate subscription and resource group, followed by a unique name for the registry.
+4. Choose the pricing plan with the necessary capabilites you need, I chose basic.
+5. Finally, hit review + create to finish.
 
-## Creating a Service principle to intereact with our ACR and Nexus
-1. To avoid the insecurities revolving around using an admin user to authenticate to our ACR and nexus repo, we will create need to create a service principal. 
+## Creating a Service principle to interact with our ACR and Nexus
+1. To avoid the insecurities revolving around using an admin user to authenticate to our ACR and Nexus repo, we will need to create a service principal. 
 
     Note: An Azure service principal is an identity that allows access to Azure resources for automated tools, hosted services, and applications.  
 
@@ -167,18 +167,18 @@ Note: You might have to use yum instead of apt as package manager depends on OS 
    **Note: These credentials are only good for 1 year before you must create another service principal.**
 
 ## Configure a Docker Proxy in Nexus
-1. After signing into our admin Nexus user, on the left side bar panel of the Nexus UI, click security and then realms.
+1. After signing into our admin Nexus user, on the left sidebar panel of the Nexus UI, click security and then realms.
 
 2. Change the docker bearer token from available to active.
 3. Once you have done that click the cog icon at the top left of the screen, then click repositories.
-4. Click create reposotory, and then click docker (proxy).
+4. Click Create Repository, and then click docker (proxy).
 5. Give your repo a unique name 
-6. Click the check box for HTTP and type in port 8082 that we opened for this from earlier.
-7. Click the check box for allow anonymous docker pull, this is why we enabled the docker bearer pull token earlier.
+6. Click the check box for HTTP and type in port 8082 that we opened for this earlier.
+7. Click the check box to allow anonymous docker pull, this is why we enabled the docker bearer pull token.
 8. Type your login server for your ACR with https:// in the remote storage URL space and click use certs stored in Nexus box.
-9. Click view certificate and add certificate to truststore.
-10. Select a blob store that will hold our cache images, if you dont have a blob store created yet, go to blob stores, and create a file or S3 store.
-11. Lastly click authentication for HTTP at the bottom of the form and type the Service Prinicpal ID and password we configured from earlier here.
+9. Click view certificate and add the certificate to truststore.
+10. Select a blob store that will hold our cache images, if you don't have a blob store created yet, go to blob stores, and create a file or S3 store.
+11. Lastly, click authentication for HTTP at the bottom of the form and type the Service Principal ID and password we configured from earlier here.
 12. I left everything else as default.
 
 ## Test our Nexus Proxy with ACR
@@ -206,4 +206,4 @@ Note: You might have to use yum instead of apt as package manager depends on OS 
 5. Now we can try to pull an image from our ACR by running the command,
 
    **docker pull nexus-hostname:repository-port/image**
-6. To confirm that the pull request was sucessful you should see the image folder in the browse repo section in Nexus UI and a repo status of Remote available.
+6. To confirm that the pull request was successful you should see the image folder in the browse repo section in Nexus UI and a repo status of Remote available.
