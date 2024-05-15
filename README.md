@@ -207,3 +207,11 @@ Note: You might have to use yum instead of apt as the package manager depends on
 
    **docker pull nexus-hostname:repository-port/image**
 6. To confirm that the pull request was successful you should see the image folder in the browse repo section in Nexus UI and a repo status of Remote available.
+
+## Debug Methods
+1. Enable debug for more in depth docker logs
+    
+    a. To enable debug level logs you can run the command **sudo vi /etc/docker/daemon.json** and add the line.
+        
+        "debug": true 
+2. If you **cd into /var/log**, running the command **tail syslog** can also prove to be useful to see the most recent events.
