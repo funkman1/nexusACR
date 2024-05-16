@@ -65,7 +65,7 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
     b.	Run the command **sudo apt upgrade -y** to download the updates previously retrieved
 
-Note: You might have to use yum instead of apt as the package manager depends on the OS type
+Note: You might have to use a different package manager depending the OS type
 
 3.	Next, we should install wget so that we can download the tar file from the download site
 
