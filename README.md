@@ -12,39 +12,49 @@ This project aims to produce the necessary components needed to create a Docker 
 - Create an Azure Container Registry.
 - Connect our ACR with our Nexus repository using proper authentication methods.
 
+## Important Notes
 
-## Creating an Azure VM to host Nexus 
+   **Service Principal credentials are only good for 1 year before you must create another service principal.**
+
+   If you have already configured Nexus
+
+
+
+## 1) Creating an Azure VM to host Nexus 
 
 To use Nexus, we need somewhere to host it. I chose to host the service on an Azure VM just to start with a clean slate, but you can host the service locally on your machine if need be.
 
 ### To configure an Azure VM do the following:
 
-1. Sign in to the Azure portal and search for virtual machines.
-2. Click Create in the top left corner
-3. On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with. You can also create a new resource group on this page.
-4. Assign a unique name to your virtual machine
-5. Select the appropriate Region/AZ that best aligns with your location.
-6.	Select the image of your VM, I chose Ubuntu server 22.04 
+1.1 Sign in to the Azure portal and search for virtual machines.
 
-    a.	If you want to select a different image, select see all images and browse for your desired image
-7.	Select a size for the VM, refer to the Nexus repo recommendations profile below
+1.2 Click Create in the top left corner
+
+1.3 On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with. You can also create a new resource group on this page.
+
+1.4 Assign a unique name to your virtual machine
+
+1.5 Select the appropriate Region/AZ that best aligns with your location.
+
+1.6	Select the image of your VM, I chose Ubuntu server 22.04
+
+1.7	Select a size for the VM, refer to the Nexus repo recommendations profile below, **I chose B4ms 4 CPU and 16GiB (need min 4 CPU)**
     
     a.	https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html
 
-    b.	**I chose B4ms 4 CPU and 16GiB (need min 4 CPU)**
+1.8 Authentication options(can choose either, SSH recommended)
 
-8. Authentication options(can choose either, SSH recommended)
+1.9	Under inbound port rules, allow default selected ports of SSH(22)
 
-    a.	Ssh public key
-    
-    b.	Password
+1.10 Move on to the disks page, leave the disk size as image default, and for disk type, I chose standard SSD.
 
-9.	Under inbound port rules, allow default selected ports of SSH(22)
-10. Move on to the disks page, leave the disk size as image default, and for disk type, I chose standard SSD.
-11. Onto the networking page, you must choose a virtual network and subnet, I used the default inputs here as I created a resource group.
-12. Enable delete public IP and NIC when VM is deleted for nicer cleanup.
-13. For the management, monitoring, and advanced sections, feel free to review some of the configuration here but I left everything as default.
-14. Review the VM configuration on the review + create screen and if everything looks correct, hit create.
+1.11 Onto the networking page, you must choose a virtual network and subnet, I used the default inputs here as I created a resource group.
+
+1.12 Enable delete public IP and NIC when VM is deleted for nicer cleanup.
+
+1.13 For the management, monitoring, and advanced sections, feel free to review some of the configuration here but I left everything as default.
+
+1.14 Review the VM configuration on the review + create screen and if everything looks correct, hit create.
 
 
 
