@@ -227,7 +227,7 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```sudo systemctl status docker``` to ensure that the service is running.
 
-&nbsp;&nbsp;&nbsp;**6.2)** Login using service principal credentials, **DO NOT USE THE ACRPULL CREDENTIAL CREATED PREVIOUSLY FOR THIS, you will need to create a new service principle with the role ACRPUSH.** Simply change the role to arcpush in the script and give the service principal a name different than the pull service principle.
+&nbsp;&nbsp;&nbsp;**6.2)** Login using service principal credentials, **DO NOT USE THE ACRPULL CREDENTIAL CREATED PREVIOUSLY FOR THIS, you will need to create a new service principle with the role ACRPUSH.** Simply change the role to acrpush in the script and give the service principal a name different than the pull service principle.
     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To login use the following command, ```docker login acrloginservername -u serviceprincipleid -p serviceprincipalpassword```
 
