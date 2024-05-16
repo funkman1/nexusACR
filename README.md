@@ -30,7 +30,9 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
 &nbsp;&nbsp;&nbsp;1.2 Click Create in the top left corner
 
-&nbsp;&nbsp;&nbsp;1.3 On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with. You can also create a new resource group on this page.
+&nbsp;&nbsp;&nbsp;1.3 On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can also create a new resource group on this page.
 
 &nbsp;&nbsp;&nbsp;1.4 Assign a unique name to your virtual machine
 
