@@ -40,7 +40,7 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
 1.7	Select a size for the VM, refer to the Nexus repo recommendations profile below, **I chose B4ms 4 CPU and 16GiB (need min 4 CPU)**
     
-    a.	https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html
+    https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html
 
 1.8 Authentication options(can choose either, SSH recommended)
 
