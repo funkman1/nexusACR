@@ -274,6 +274,9 @@ to display the current version of java installed on the machine.
 ### Steps to enable debug logging for outbound requests from Nexus
 
 7.1 Log in to Nexus using the admin user
+
 7.2 Click the cog icon and scroll down on the left side panel to the support section and click logging.
+
 7.3 Find the Logger name called org.apache.http.wire, click on it and switch the logger level to debug, and click save.
+
 7.4 Then go to the logs section and click on the outbound-request.log and you will be able to view the outbound requests.
