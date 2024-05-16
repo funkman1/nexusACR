@@ -27,13 +27,13 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
 &nbsp;&nbsp;&nbsp;**1.1)** Sign in to the Azure portal and search for virtual machines.
 
-&nbsp;&nbsp;&nbsp;**1.2)** Click Create in the top left corner
+&nbsp;&nbsp;&nbsp;**1.2)** Click Create in the top left corner.
 
 &nbsp;&nbsp;&nbsp;**1.3)** On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can also create a new resource group on this page.
 
-&nbsp;&nbsp;&nbsp;**1.4)** Assign a unique name to your virtual machine
+&nbsp;&nbsp;&nbsp;**1.4)** Assign a unique name to your virtual machine.
 
 &nbsp;&nbsp;&nbsp;**1.5)** Select the appropriate Region/AZ that best aligns with your location.
 
@@ -45,7 +45,7 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
 &nbsp;&nbsp;&nbsp;**1.8)** Authentication options(can choose either, **SSH recommended**)
 
-&nbsp;&nbsp;&nbsp;**1.9)**	Under inbound port rules, allow default selected ports of SSH(22)
+&nbsp;&nbsp;&nbsp;**1.9)**	Under inbound port rules, allow default selected ports of SSH(22).
 
 &nbsp;&nbsp;&nbsp;**1.10)** Move on to the disks page, leave the disk size as image default, and for disk type, I chose standard SSD.
 
@@ -77,7 +77,7 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
 &nbsp;&nbsp;&nbsp;```sudo apt upgrade -y```
 
-&nbsp;&nbsp;&nbsp;Note: You might have to use a different package manager depending on your OS type
+&nbsp;&nbsp;&nbsp;Note: You might have to use a different package manager depending on your OS type.
 
 &nbsp;&nbsp;&nbsp;**2.3)**	Next, we should install wget so that we can download the tar file from the download site, run the following command:
 
@@ -95,31 +95,31 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;Verify the java installation by running the command ```java -version```
 
-&nbsp;&nbsp;&nbsp;**2.5)**	Now lets create a directory where we can download the tar file 
+&nbsp;&nbsp;&nbsp;**2.5)**	Now lets create a directory where we can download the tar file.
 
 &nbsp;&nbsp;&nbsp;Run the command ```sudo mkdir /app```, and then ```cd app```, and ```pwd``` to verify you are in the /app directory.
 
-&nbsp;&nbsp;&nbsp;**2.6)**	Retrieve the tar download file
+&nbsp;&nbsp;&nbsp;**2.6)**	Retrieve the tar download file.
 
 &nbsp;&nbsp;&nbsp;Go the to following link https://help.sonatype.com/en/download.html and copy the download URL for the OS and java version you are using.
 
-&nbsp;&nbsp;&nbsp;Run the command ```sudo wget CopiedURL```,  to download the tar file
+&nbsp;&nbsp;&nbsp;Run the command ```sudo wget CopiedURL```,  to download the tar file.
 
-&nbsp;&nbsp;&nbsp;Run the ```ls``` command to verify the tar file is in the directory
+&nbsp;&nbsp;&nbsp;Run the ```ls``` command to verify the tar file is in the directory.
 
-&nbsp;&nbsp;&nbsp;Run the command ```sudo tar -xvf tarfilename```  to untar the file
+&nbsp;&nbsp;&nbsp;Run the command ```sudo tar -xvf tarfilename```  to untar the file.
 
-&nbsp;&nbsp;&nbsp;Run the ```ls``` command and you should see 2 files, sonatype-work and nexus-version
+&nbsp;&nbsp;&nbsp;Run the ```ls``` command and you should see 2 files, sonatype-work and nexus-version.
 
 &nbsp;&nbsp;&nbsp;We no longer need the tar file so we can remove it using the command ```sudo rm tarfilename``` 
 
-&nbsp;&nbsp;&nbsp;**2.7)**	Rename nexus-version file
+&nbsp;&nbsp;&nbsp;**2.7)**	Rename nexus-version file.
 
 &nbsp;&nbsp;&nbsp;Run the command ```sudo mv nexus-version nexus```
     
-&nbsp;&nbsp;&nbsp;The file should now show to be called nexus
+&nbsp;&nbsp;&nbsp;The file should now show to be called nexus.
 
-&nbsp;&nbsp;&nbsp;**2.8)**	Add nexus user
+&nbsp;&nbsp;&nbsp;**2.8)**	Add nexus user.
 
 &nbsp;&nbsp;&nbsp;Run the command ```sudo adduser nexus```
 
@@ -129,23 +129,23 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;```sudo chown -R nexus:nexus /app/sonatype-work```
 
-&nbsp;&nbsp;&nbsp;**2.9)**	Add nexus user to nexus.rc file
+&nbsp;&nbsp;&nbsp;**2.9)**	Add nexus user to nexus.rc file.
 
 &nbsp;&nbsp;&nbsp;Run ```sudo vi /app/nexus/bin/nexus.rc```
 
 &nbsp;&nbsp;&nbsp;**Uncomment the run_as_user line and add nexus in the “”**
 
-&nbsp;&nbsp;&nbsp;Verify by running the ```cat``` command on the file
+&nbsp;&nbsp;&nbsp;Verify by running the ```cat``` command on the file.
 
-&nbsp;&nbsp;&nbsp;**2.10)**	Start the nexus service
+&nbsp;&nbsp;&nbsp;**2.10)**	Start the nexus service.
 
 &nbsp;&nbsp;&nbsp;Run the command ```./nexus/bin/nexus start```
 
 &nbsp;&nbsp;&nbsp;Verify nexus is running by using the command ```./nexus/bin/nexus status```
 
-&nbsp;&nbsp;&nbsp;**2.11)**	Add port **8081** and **8082** to reach the nexus UI from the browser
+&nbsp;&nbsp;&nbsp;**2.11)**	Add port **8081** and **8082** to reach the nexus UI from the browser.
 
-&nbsp;&nbsp;&nbsp;In the Azure portal, go to networking, and click create port rule, then inbound port rule
+&nbsp;&nbsp;&nbsp;In the Azure portal, go to networking, and click create port rule, then inbound port rule.
 
 &nbsp;&nbsp;&nbsp;Set destination port as 8081 and protocol TCP, add a description, then hit create. Do the same for port 8082, we will need to use it later.
 
@@ -153,21 +153,22 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;You should now be able to see the Nexus UI by going to the IP associated with your machine and appending :8081, so *IP*:8081
 
-&nbsp;&nbsp;&nbsp;**2.13)**	Sign in to the admin user
+&nbsp;&nbsp;&nbsp;**2.13)**	Sign in to the admin user.
 
-&nbsp;&nbsp;&nbsp;Click sign-in located in the top right of the UI and you will see the instructions to retrieve the admin user password
+&nbsp;&nbsp;&nbsp;Click sign-in located in the top right of the UI and you will see the instructions to retrieve the admin user password.
 
 &nbsp;&nbsp;&nbsp;Use the command ```cat /app/sonatype-work/nexus3/admin.password```
 
-&nbsp;&nbsp;&nbsp;Copy the password displayed and log in using that and admin as the user
+&nbsp;&nbsp;&nbsp;Copy the password displayed and log in using that and admin as the user.
 
-&nbsp;&nbsp;&nbsp;You will then be prompted to configure a new password
+&nbsp;&nbsp;&nbsp;You will then be prompted to configure a new password.
 
-&nbsp;&nbsp;&nbsp;Disable anonymous access
+&nbsp;&nbsp;&nbsp;Disable anonymous access.
 
-&nbsp;&nbsp;&nbsp;**2.14)**	Make sure to check the status checks provided in UI to see if your host is sufficient to run Nexus
+&nbsp;&nbsp;&nbsp;**2.14)**	Make sure to check the status checks provided in UI to see if your host is sufficient to run Nexus.
     
 &nbsp;&nbsp;&nbsp;Under the support tab, then status, view to see if there are any warnings.
+
 ## 3) Create an Azure Container Registry
 &nbsp;&nbsp;&nbsp;**3.1)** This process is pretty straightforward and can be done from the Azure portal.
 
@@ -199,7 +200,7 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;**5.4)** Click Create Repository, and then click docker (proxy).
 
-&nbsp;&nbsp;&nbsp;**5.5)** Give your repo a unique name 
+&nbsp;&nbsp;&nbsp;**5.5)** Give your repo a unique name.
 
 &nbsp;&nbsp;&nbsp;**5.6)** Click the check box for HTTP and type in port 8082 that we opened for this earlier.
 
@@ -222,9 +223,9 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;**6.1)** To connect to our ACR we first need to make sure we have docker installed and running.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```docker version``` to verify docker is installed
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```docker version``` to verify docker is installed.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```sudo systemctl status docker``` to ensure that the service is running
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```sudo systemctl status docker``` to ensure that the service is running.
 
 &nbsp;&nbsp;&nbsp;**6.2)** Login using service principal credentials, **DO NOT USE THE ACRPULL CREDENTIAL CREATED PREVIOUSLY FOR THIS, you will need to create a new service principle with the role ARCPUSH.** Simply change the role to arcpush in the script and give the service principal a name different than the pull service principle.
     
@@ -232,7 +233,7 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;**6.3)** Pull down the official docker hello-world image by running the command ```docker pull hello-world```
 
-&nbsp;&nbsp;&nbsp;**6.4)** Verify the image has been retrieved by running the command ```docker images```, it should show hello-world
+&nbsp;&nbsp;&nbsp;**6.4)** Verify the image has been retrieved by running the command ```docker images```, it should show hello-world.
 
 &nbsp;&nbsp;&nbsp;**6.5)** To push our image to our ACR repo we first need to tag our hello-world image, run the command, ```docker tag hello-world acrloginserver /hello-world:v1```
 
@@ -274,7 +275,7 @@ to display the current version of java installed on the machine.
 
 ### Steps to enable debug logging for outbound requests from Nexus
 
-&nbsp;&nbsp;&nbsp;**7.1)** Log in to Nexus using the admin user
+&nbsp;&nbsp;&nbsp;**7.1)** Log in to Nexus using the admin user.
 
 &nbsp;&nbsp;&nbsp;**7.2)** Click the cog icon and scroll down on the left side panel to the support section and click logging.
 
