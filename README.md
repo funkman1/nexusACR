@@ -192,33 +192,59 @@ to display the current version of java installed on the machine.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The service principal ID and password will be displayed when the script is complete, **make sure to store these credentials somewhere safe like Azure key vault.**
 
 ## 5) Configure a Docker Proxy in Nexus
-1. After signing into our admin Nexus user, on the left sidebar panel of the Nexus UI, click security and then realms.
+&nbsp;&nbsp;&nbsp;5.1) After signing into our admin Nexus user, on the left sidebar panel of the Nexus UI, click security and then realms.
 
-2. Change the docker bearer token from available to active.
-3. Once you have done that click the cog icon at the top left of the screen, then click repositories.
-4. Click Create Repository, and then click docker (proxy).
-5. Give your repo a unique name 
-6. Click the check box for HTTP and type in port 8082 that we opened for this earlier.
-7. Click the check box to allow anonymous docker pull, this is why we enabled the docker bearer pull token.
-8. Type your login server for your ACR with https:// in the remote storage URL space and click use certs stored in Nexus box.
-9. Click view certificate and add the certificate to truststore.
-10. Select a blob store that will hold our cache images, if you don't have a blob store created yet, go to blob stores, and create a file or S3 store.
-11. Lastly, click authentication for HTTP at the bottom of the form and type the Service Principal ID and password we configured from earlier here.
-12. I left everything else as default.
+&nbsp;&nbsp;&nbsp;5.2) Change the docker bearer token from available to active.
+
+&nbsp;&nbsp;&nbsp;5.3) Once you have done that click the cog icon at the top left of the screen, then click repositories.
+
+&nbsp;&nbsp;&nbsp;5.4) Click Create Repository, and then click docker (proxy).
+
+&nbsp;&nbsp;&nbsp;5.5) Give your repo a unique name 
+
+&nbsp;&nbsp;&nbsp;5.6) Click the check box for HTTP and type in port 8082 that we opened for this earlier.
+
+&nbsp;&nbsp;&nbsp;5.7) Click the check box to allow anonymous docker pull, this is why we enabled the docker bearer pull token.
+
+&nbsp;&nbsp;&nbsp;5.8) Type your login server for your ACR with https:// in the remote storage URL space and click use certs stored in Nexus box.
+
+&nbsp;&nbsp;&nbsp;5.9) Click view certificate and add the certificate to truststore.
+
+&nbsp;&nbsp;&nbsp;5.10) Select a blob store that will hold our cache images, if you don't have a blob store created yet, go to blob stores, and create a file or S3 store.
+
+&nbsp;&nbsp;&nbsp;5.11) Lastly, click authentication for HTTP at the bottom of the form and type the Service Principal ID and password we configured from earlier here.
+
+&nbsp;&nbsp;&nbsp;5.12) I left everything else as default.
 
 ## 6) Test our Nexus Proxy with ACR
+### Push image to ACR
 
-1. To connect to our ACR we first need to make sure we have docker installed and running.
+**Note: If you already have images in ACR to test with, skip to the next section, Pull image using Nexus. This section is needed to add images to our empty ACR we just created.**
 
-    a.	Use the command **docker version** to verify docker is installed
+&nbsp;&nbsp;&nbsp;6.1) To connect to our ACR we first need to make sure we have docker installed and running.
 
-    b.	Use the command **sudo systemctl status docker** to ensure that the service is running
-2. Login using service principal credentials
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```docker version``` to verify docker is installed
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```sudo systemctl status docker``` to ensure that the service is running
+
+&nbsp;&nbsp;&nbsp;6.2) Login using service principal credentials, **DO NOT USE THE ACRPULL CREDENTIAL CREATED PREVIOUSLY FOR THIS, you will need to create a new service principle with the role ARCPUSH.** Simply change the role to arcpush in the script and give the service principal a name different than the pull service principle.
     
-    a. To login use the following command, **docker login *loginservername* -u *serviceprincipleid* -p *serviceprincipalpassword*** 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To login use the following command, ```docker login acrloginservername -u serviceprincipleid -p serviceprincipalpassword```
+
+&nbsp;&nbsp;&nbsp;6.3) Pull down the official docker hello-world image by running the command ```docker pull hello-world```
+
+&nbsp;&nbsp;&nbsp;6.4) Verify the image has been retrieved by running the command ```docker images```, it should show hello-world
+
+&nbsp;&nbsp;&nbsp;6.5) To push our image to our ACR repo we first need to tag our hello-world image, run the command, ```docker tag hello-world acrloginserver /hello-world:v1```
+
+&nbsp;&nbsp;&nbsp;6.6) Now we are ready to push our image to ACR by running the command, ```docker push loginserver/hello-world:v1```
+
+&nbsp;&nbsp;&nbsp;6.7) To confirm that the image has pushed correctly, run the command, ```az acr repository list --name registryname --output table``` , it should display the following
+
+
+### Pull image using Nexus
    
-    b.	if you receive an error described as “/var/run/docker.sock: connect: permission denied” while trying to connect, run the command **sudo chmod 666 /var/run/docker.sock** and try again
-3. One last important step to configure before we try to pull from ACR, use the command **sudo vi /etc/docker/daemon.json**  and add the following text:
+&nbsp;&nbsp;&nbsp;6.8) One last important step to configure before we try to pull from ACR, use the command **sudo vi /etc/docker/daemon.json**  and add the following text: **Note: only required if you dont have SSL configured for your nexus servers**
         
         {
             "insecure-registries": [
@@ -227,11 +253,21 @@ to display the current version of java installed on the machine.
 
         }
 
-4. run the command **sudo systemctl restart docker** to restart the docker service with our recent change.
-5. Now we can try to pull an image from our ACR by running the command,
 
-   **docker pull nexus-hostname:repository-port/image**
-6. To confirm that the pull request was successful you should see the image folder in the browse repo section in Nexus UI and a repo status of Remote available.
+
+
+&nbsp;&nbsp;&nbsp;6.9) run the command ```sudo systemctl restart docker``` to restart the docker service with our recent change.
+
+
+
+&nbsp;&nbsp;&nbsp;6.10) Now we can try to pull an image from Nexus by running the command,
+
+
+
+       docker pull nexus-hostname:repository-port/image
+
+&nbsp;&nbsp;&nbsp;6.11) To confirm that the pull request was successful you should see the image folder in the browse repo section in Nexus UI and a repo status of Remote available.
+
 
 ## 7) Debug Methods
 
