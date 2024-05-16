@@ -26,147 +26,147 @@ To use Nexus, we need somewhere to host it. I chose to host the service on an Az
 
 ### To configure an Azure VM do the following:
 
-1.1 Sign in to the Azure portal and search for virtual machines.
+&nbsp;&nbsp;&nbsp;1.1 Sign in to the Azure portal and search for virtual machines.
 
-1.2 Click Create in the top left corner
+&nbsp;&nbsp;&nbsp;1.2 Click Create in the top left corner
 
-1.3 On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with. You can also create a new resource group on this page.
+&nbsp;&nbsp;&nbsp;1.3 On the Basics screen, make sure to choose the appropriate subscription and resource group that your VM will be associated with. You can also create a new resource group on this page.
 
-1.4 Assign a unique name to your virtual machine
+&nbsp;&nbsp;&nbsp;1.4 Assign a unique name to your virtual machine
 
-1.5 Select the appropriate Region/AZ that best aligns with your location.
+&nbsp;&nbsp;&nbsp;1.5 Select the appropriate Region/AZ that best aligns with your location.
 
-1.6	Select the image of your VM, I chose Ubuntu server 22.04
+&nbsp;&nbsp;&nbsp;1.6	Select the image of your VM, I chose Ubuntu server 22.04
 
-1.7	Select a size for the VM, refer to the Nexus repo recommendations profile below, **I chose B4ms 4 CPU and 16GiB (need min 4 CPU)**
+&nbsp;&nbsp;&nbsp;1.7	Select a size for the VM, refer to the Nexus repo recommendations profile below, **I chose B4ms 4 CPU and 16GiB (need min 4 CPU)**
     
-    https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html
+&nbsp;&nbsp;&nbsp;https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html
 
-1.8 Authentication options(can choose either, SSH recommended)
+&nbsp;&nbsp;&nbsp;1.8 Authentication options(can choose either, SSH recommended)
 
-1.9	Under inbound port rules, allow default selected ports of SSH(22)
+&nbsp;&nbsp;&nbsp;1.9	Under inbound port rules, allow default selected ports of SSH(22)
 
-1.10 Move on to the disks page, leave the disk size as image default, and for disk type, I chose standard SSD.
+&nbsp;&nbsp;&nbsp;1.10 Move on to the disks page, leave the disk size as image default, and for disk type, I chose standard SSD.
 
-1.11 Onto the networking page, you must choose a virtual network and subnet, I used the default inputs here as I created a resource group.
+&nbsp;&nbsp;&nbsp;1.11 Onto the networking page, you must choose a virtual network and subnet, I used the default inputs here as I created a resource group.
 
-1.12 Enable delete public IP and NIC when VM is deleted for nicer cleanup.
+&nbsp;&nbsp;&nbsp;1.12 Enable delete public IP and NIC when VM is deleted for nicer cleanup.
 
-1.13 For the management, monitoring, and advanced sections, feel free to review some of the configuration here but I left everything as default.
+&nbsp;&nbsp;&nbsp;1.13 For the management, monitoring, and advanced sections, feel free to review some of the configuration here but I left everything as default.
 
-1.14 Review the VM configuration on the review + create screen and if everything looks correct, hit create.
+&nbsp;&nbsp;&nbsp;1.14 Review the VM configuration on the review + create screen and if everything looks correct, hit create.
 
 
 
 ## 2) Nexus Setup
 
-2.1	To run  Nexus on our newly created Linux VM, these are the outlined steps
+&nbsp;&nbsp;&nbsp;2.1	To run  Nexus on our newly created Linux VM, these are the outlined steps
 
-- Install jdk, wget, and other necessary tools
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Install jdk, wget, and other necessary tools
 
-- Download the Nexus tar file & untar the file
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download the Nexus tar file & untar the file
 
-- Set up Nexus user
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set up Nexus user
 
-- Start Nexus and access from your web browser
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start Nexus and access from your web browser
 
-2.2 After we SSH into our VM, the first step is to make sure our machine packages are up to date. Run the following commands:
+&nbsp;&nbsp;&nbsp;2.2 After we SSH into our VM, the first step is to make sure our machine packages are up to date. Run the following commands:
 
-```sudo apt update -y```
+&nbsp;&nbsp;&nbsp;```sudo apt update -y```
 
- ```sudo apt upgrade -y```
+&nbsp;&nbsp;&nbsp;```sudo apt upgrade -y```
 
-Note: You might have to use a different package manager depending on your OS type
+&nbsp;&nbsp;&nbsp;Note: You might have to use a different package manager depending on your OS type
 
-2.3	Next, we should install wget so that we can download the tar file from the download site, run the following command:
+&nbsp;&nbsp;&nbsp;2.3	Next, we should install wget so that we can download the tar file from the download site, run the following command:
 
-```sudo apt install wget -y```
+&nbsp;&nbsp;&nbsp;```sudo apt install wget -y```
 
-2.4	Download and verify Java installation
+&nbsp;&nbsp;&nbsp;2.4	Download and verify Java installation
 
-Start by running the command 
+&nbsp;&nbsp;&nbsp;Start by running the command 
    ``` java version ```
 to display the current version of java installed on the machine.
 
-If java has not been installed yet, there will be a list of commands provided that will offer ways to download java, I chose to use the command 
+&nbsp;&nbsp;&nbsp;If java has not been installed yet, there will be a list of commands provided that will offer ways to download java, I chose to use the command 
 
-```sudo apt install default-jre```
+&nbsp;&nbsp;&nbsp;```sudo apt install default-jre```
 
-Verify the java installation by running the command ```java -version```
+&nbsp;&nbsp;&nbsp;Verify the java installation by running the command ```java -version```
 
-2.5	Now lets create a directory where we can download the tar file 
+&nbsp;&nbsp;&nbsp;2.5	Now lets create a directory where we can download the tar file 
 
-Run the command ```sudo mkdir /app```, and then ```cd app```, and ```pwd``` to verify you are in the /app directory.
+&nbsp;&nbsp;&nbsp;Run the command ```sudo mkdir /app```, and then ```cd app```, and ```pwd``` to verify you are in the /app directory.
 
-2.6	Retrieve the tar download file
+&nbsp;&nbsp;&nbsp;2.6	Retrieve the tar download file
 
-Go the to following link https://help.sonatype.com/en/download.html and copy the download URL for the OS and java version you are using.
+&nbsp;&nbsp;&nbsp;Go the to following link https://help.sonatype.com/en/download.html and copy the download URL for the OS and java version you are using.
 
-Run the command ```sudo wget CopiedURL```,  to download the tar file
+&nbsp;&nbsp;&nbsp;Run the command ```sudo wget CopiedURL```,  to download the tar file
 
-Run the ```ls``` command to verify the tar file is in the directory
+&nbsp;&nbsp;&nbsp;Run the ```ls``` command to verify the tar file is in the directory
 
-Run the command ```sudo tar -xvf tarfilename```  to untar the file
+&nbsp;&nbsp;&nbsp;Run the command ```sudo tar -xvf tarfilename```  to untar the file
 
-Run the ```ls``` command and you should see 2 files, sonatype-work and nexus-version
+&nbsp;&nbsp;&nbsp;Run the ```ls``` command and you should see 2 files, sonatype-work and nexus-version
 
-We no longer need the tar file so we can remove it using the command ```sudo rm tarfilename``` 
+&nbsp;&nbsp;&nbsp;We no longer need the tar file so we can remove it using the command ```sudo rm tarfilename``` 
 
-2.7	Rename nexus-version file
+&nbsp;&nbsp;&nbsp;2.7	Rename nexus-version file
 
-Run the command ```sudo mv nexus-version nexus```
+&nbsp;&nbsp;&nbsp;Run the command ```sudo mv nexus-version nexus```
     
-The file should now show to be called nexus
+&nbsp;&nbsp;&nbsp;The file should now show to be called nexus
 
-2.8	Add nexus user
+&nbsp;&nbsp;&nbsp;2.8	Add nexus user
 
-Run the command ```sudo adduser nexus```
+&nbsp;&nbsp;&nbsp;Run the command ```sudo adduser nexus```
 
-Give the new user the right privileges to necessary folders, do the following:
+&nbsp;&nbsp;&nbsp;Give the new user the right privileges to necessary folders, do the following:
 
-```sudo chown -R nexus:nexus /app/nexus```
+&nbsp;&nbsp;&nbsp;```sudo chown -R nexus:nexus /app/nexus```
 
-```sudo chown -R nexus:nexus /app/sonatype-work```
+&nbsp;&nbsp;&nbsp;```sudo chown -R nexus:nexus /app/sonatype-work```
 
-2.9	Add nexus user to nexus.rc file
+&nbsp;&nbsp;&nbsp;2.9	Add nexus user to nexus.rc file
 
-Run ```sudo vi /app/nexus/bin/nexus.rc```
+&nbsp;&nbsp;&nbsp;Run ```sudo vi /app/nexus/bin/nexus.rc```
 
-**Uncomment the run_as_user line and add nexus in the “”**
+&nbsp;&nbsp;&nbsp;**Uncomment the run_as_user line and add nexus in the “”**
 
-Verify by running the ```cat``` command on the file
+&nbsp;&nbsp;&nbsp;Verify by running the ```cat``` command on the file
 
-2.10	Start the nexus service
+&nbsp;&nbsp;&nbsp;2.10	Start the nexus service
 
-Run the command ```./nexus/bin/nexus start```
+&nbsp;&nbsp;&nbsp;Run the command ```./nexus/bin/nexus start```
 
-Verify nexus is running by using the command ```./nexus/bin/nexus status```
+&nbsp;&nbsp;&nbsp;Verify nexus is running by using the command ```./nexus/bin/nexus status```
 
-2.11	Add port **8081** and **8082** to reach the nexus UI from the browser
+&nbsp;&nbsp;&nbsp;2.11	Add port **8081** and **8082** to reach the nexus UI from the browser
 
-In the Azure portal, go to networking, and click create port rule, then inbound port rule
+&nbsp;&nbsp;&nbsp;In the Azure portal, go to networking, and click create port rule, then inbound port rule
 
-Set destination port as 8081 and protocol TCP, add a description, then hit create. Do the same for port 8082, we will need to use it later.
+&nbsp;&nbsp;&nbsp;Set destination port as 8081 and protocol TCP, add a description, then hit create. Do the same for port 8082, we will need to use it later.
 
-2.12	Access the Nexus UI
+&nbsp;&nbsp;&nbsp;2.12	Access the Nexus UI
 
-You should now be able to see the Nexus UI by going to the IP associated with your machine and appending :8081, so *IP*:8081
+&nbsp;&nbsp;&nbsp;You should now be able to see the Nexus UI by going to the IP associated with your machine and appending :8081, so *IP*:8081
 
-2.13	Sign in to the admin user
+&nbsp;&nbsp;&nbsp;2.13	Sign in to the admin user
 
-Click sign-in located in the top right of the UI and you will see the instructions to retrieve the admin user password
+&nbsp;&nbsp;&nbsp;Click sign-in located in the top right of the UI and you will see the instructions to retrieve the admin user password
 
-Use the command ```cat /app/sonatype-work/nexus3/admin.password```
+&nbsp;&nbsp;&nbsp;Use the command ```cat /app/sonatype-work/nexus3/admin.password```
 
-Copy the password displayed and log in using that and admin as the user
+&nbsp;&nbsp;&nbsp;Copy the password displayed and log in using that and admin as the user
 
-You will then be prompted to configure a new password
+&nbsp;&nbsp;&nbsp;You will then be prompted to configure a new password
 
-Disable anonymous access
+&nbsp;&nbsp;&nbsp;Disable anonymous access
 
-2.14	Make sure to check the status checks provided in UI to see if your host is sufficient to run Nexus
+&nbsp;&nbsp;&nbsp;2.14	Make sure to check the status checks provided in UI to see if your host is sufficient to run Nexus
     
-Under the support tab, then status, view to see if there are any warnings.
+&nbsp;&nbsp;&nbsp;Under the support tab, then status, view to see if there are any warnings.
 ## Create an Azure Container Registry
 1.  This process is pretty straightforward and can be done from the Azure portal.
 
