@@ -237,14 +237,16 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;6.5) To push our image to our ACR repo we first need to tag our hello-world image, run the command, ```docker tag hello-world acrloginserver /hello-world:v1```
 
-&nbsp;&nbsp;&nbsp;6.6) Now we are ready to push our image to ACR by running the command, ```docker push loginserver/hello-world:v1```
+&nbsp;&nbsp;&nbsp;6.6) Now we are ready to push our image to ACR by running the command, ```docker push acrloginserver/hello-world:v1```
 
 &nbsp;&nbsp;&nbsp;6.7) To confirm that the image has pushed correctly, run the command, ```az acr repository list --name registryname --output table``` , it should display the following
+
+**Note: acrloginserver and registry name are different, you can find these by going to your ACR in the azure portal, going to settings then access keys.**
 
 
 ### Pull image using Nexus
    
-&nbsp;&nbsp;&nbsp;6.8) One last important step to configure before we try to pull from ACR, use the command **sudo vi /etc/docker/daemon.json**  and add the following text: **Note: only required if you dont have SSL configured for your nexus servers**
+&nbsp;&nbsp;&nbsp;6.8) One last important step to configure before we try to pull from ACR, use the command ```sudo vi /etc/docker/daemon.json```  and add the following text: **Note: only required if you dont have SSL configured for your nexus servers**
         
         {
             "insecure-registries": [
@@ -264,7 +266,7 @@ to display the current version of java installed on the machine.
 
 
 
-       docker pull nexus-hostname:repository-port/image
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```docker pull nexus-hostname:repository-port/image```
 
 &nbsp;&nbsp;&nbsp;6.11) To confirm that the pull request was successful you should see the image folder in the browse repo section in Nexus UI and a repo status of Remote available.
 
@@ -273,10 +275,10 @@ to display the current version of java installed on the machine.
 
 ### Steps to enable debug logging for outbound requests from Nexus
 
-7.1) Log in to Nexus using the admin user
+&nbsp;&nbsp;&nbsp;7.1) Log in to Nexus using the admin user
 
-7.2) Click the cog icon and scroll down on the left side panel to the support section and click logging.
+&nbsp;&nbsp;&nbsp;7.2) Click the cog icon and scroll down on the left side panel to the support section and click logging.
 
-7.3) Find the Logger name called org.apache.http.wire, click on it and switch the logger level to debug, and click save.
+&nbsp;&nbsp;&nbsp;7.3) Find the Logger name called org.apache.http.wire, click on it and switch the logger level to debug, and click save.
 
-7.4) Then go to the logs section and click on the outbound-request.log and you will be able to view the outbound requests.
+&nbsp;&nbsp;&nbsp;7.4) Then go to the logs section and click on the outbound-request.log and you will be able to view the outbound requests.
