@@ -212,7 +212,7 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;**5.10)** Select a blob store that will hold our cache images, if you don't have a blob store created yet, go to blob stores, and create a file or S3 store.
 
-&nbsp;&nbsp;&nbsp;**5.11)** **Lastly, click authentication for HTTP at the bottom of the form and type the Service Principal ID and password we configured from earlier here. Make sure to use the credentials linked to an arcpull service principal**
+&nbsp;&nbsp;&nbsp;**5.11)** **Lastly, click authentication for HTTP at the bottom of the form and type the Service Principal ID and password we configured from earlier here. Make sure to use the credentials linked to an acrpull service principal**
 
 &nbsp;&nbsp;&nbsp;**5.12)** I left everything else as default.
 
@@ -227,7 +227,7 @@ to display the current version of java installed on the machine.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the command ```sudo systemctl status docker``` to ensure that the service is running.
 
-&nbsp;&nbsp;&nbsp;**6.2)** Login using service principal credentials, **DO NOT USE THE ACRPULL CREDENTIAL CREATED PREVIOUSLY FOR THIS, you will need to create a new service principle with the role ARCPUSH.** Simply change the role to arcpush in the script and give the service principal a name different than the pull service principle.
+&nbsp;&nbsp;&nbsp;**6.2)** Login using service principal credentials, **DO NOT USE THE ACRPULL CREDENTIAL CREATED PREVIOUSLY FOR THIS, you will need to create a new service principle with the role ACRPUSH.** Simply change the role to arcpush in the script and give the service principal a name different than the pull service principle.
     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To login use the following command, ```docker login acrloginservername -u serviceprincipleid -p serviceprincipalpassword```
 
