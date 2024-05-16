@@ -170,25 +170,26 @@ to display the current version of java installed on the machine.
     
 &nbsp;&nbsp;&nbsp;Under the support tab, then status, view to see if there are any warnings.
 ## 3) Create an Azure Container Registry
-1.  This process is pretty straightforward and can be done from the Azure portal.
+&nbsp;&nbsp;&nbsp;3.1) This process is pretty straightforward and can be done from the Azure portal.
 
-2. Log in to the Azure portal and search for container registries.
-3. Fill out the required fields with the appropriate subscription and resource group, followed by a unique name for the registry.
-4. Choose the pricing plan with the necessary capabilites you need, I chose basic.
-5. Finally, hit review + create to finish.
+&nbsp;&nbsp;&nbsp;3.2) Log in to the Azure portal and search for container registries.
+
+&nbsp;&nbsp;&nbsp;3.3) Fill out the required fields with the appropriate subscription and resource group, followed by a unique name for the registry.
+
+&nbsp;&nbsp;&nbsp;3.4) Choose the pricing plan with the necessary capabilites you need, I chose basic.
+
+&nbsp;&nbsp;&nbsp;3.5) Finally, hit review + create to finish.
 
 ## 4) Creating a Service principle to interact with our ACR and Nexus
-1. To avoid the insecurities revolving around using an admin user to authenticate to our ACR and Nexus repo, we will need to create a service principal. 
+&nbsp;&nbsp;&nbsp;4.1) To avoid the insecurities revolving around using an admin user to authenticate to our ACR and Nexus repo, we will need to create a service principal. 
 
-    Note: An Azure service principal is an identity that allows access to Azure resources for automated tools, hosted services, and applications.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: An Azure service principal is an identity that allows access to Azure resources for automated tools, hosted services, and applications.  
 
-2. Run the acrsp.sh script to create the service principle. **(Make sure to edit the ACR_NAME and SERVICE_PRINCIPAL_NAME variables in the script before running it)**
+&nbsp;&nbsp;&nbsp;4.2) Run the acrsp.sh script to create the service principle. **(Make sure to edit the ACR_NAME and SERVICE_PRINCIPAL_NAME variables in the script before running it)**
     
-    The script will create a service principle with the role of acrpull, this is because we are only using Nexus to pull from our ACR, we don't want to give the ability to push new images.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The script will create a service principle with the role of acrpull, this is because we are only using Nexus to pull from our ACR, we don't want to give the ability to push new images.
     
-    The service principal ID and password will be displayed when the script is complete, **make sure to store these credentials somewhere safe like Azure key vault.**
-
-   **Note: These credentials are only good for 1 year before you must create another service principal.**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The service principal ID and password will be displayed when the script is complete, **make sure to store these credentials somewhere safe like Azure key vault.**
 
 ## 5) Configure a Docker Proxy in Nexus
 1. After signing into our admin Nexus user, on the left sidebar panel of the Nexus UI, click security and then realms.
