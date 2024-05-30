@@ -1,0 +1,4 @@
+name: conda-trial
+channels:
+  - defaults
+prefix: /home/nickfun/miniconda3/envs/conda-trial
